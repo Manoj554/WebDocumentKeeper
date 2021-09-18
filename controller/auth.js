@@ -4,16 +4,20 @@ const bcrypt = require('bcrypt');
 
 exports.Home = (req,res) =>{
     res.status(200).json({
-        name:'Manoj',
-        id:29,
-        branch:'EEE',
-        college:'IIT',
+        Name:'Manoj Kumar Mondal',
+        CollegeId:'B318029',
+        Branch:'EEE',
+        College:'IIIT Bhubaneswar',
         Location:'Bhubaneswar',
-        arr:[1,3,4,5,'manoj'],
-        obj:{
-            name:'mondal',
-            email:'b318029@iiit-bh.ac.in'
-        }
+        Website:'https://manojkumar.herokuapp.com',
+        Interest:['MERN Stack development','Web-Technologies','Website-Hosting'],
+        Contacts:{
+            Email:['manojmark554@gmail.com','b318029@iiit-bh.ac.in'],
+            Phone:['+91 8144607288', '+91 9078454554'],
+            HomeTown:'Santoshi Nagar Umerkote Odisha, India'
+        },
+        Achivments:'Best paper Award (Online-Based Smart Energy Meter) in a Session in EPREC Conference 2021 ,Jamshedpur',
+        // Resume:"https://webdocumentkeeper.herokuapp.com/61462ea3949aa144461ed92f/"
     })
 }
 
@@ -59,10 +63,10 @@ exports.Signin = async (req,res) =>{
                     msg:'Login successful'
                 });
             }else{
-                res.status(422).json({msg:'Invalid Credentials - password'});
+                res.status(422).json({msg:'Invalid-Credentials'});
             }      
         }else{
-            res.status(422).json({msg:'Invalid-Credentials-email'});
+            res.status(422).json({msg:'Invalid-Credentials'});
         }
     } catch (error) {
         console.log(error);

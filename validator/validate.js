@@ -21,7 +21,7 @@ exports.validateSignUpRequest = [
     .withMessage('confirm password is required'),
     check('password')
     .isLength({min:8})
-    .withMessage('password should have min length 8 & Atleast a Lowercase,UpperCase & a digit')
+    .withMessage('password should have min length of 8' )
 ];
 
 exports.validateSignInRequest = [
