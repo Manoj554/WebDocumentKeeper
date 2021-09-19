@@ -52,7 +52,7 @@ exports.addDocument = async (req,res) =>{
         if(error.code === "LIMIT_FILE_SIZE"){
             return res.status(400).json({msg:"FileSize should be less than 2Mb"});
         }
-        return res.status(500).json({msg:'Internal Server error'});
+        return res.status(500).json({msg:'Internal Server error',error:error});
     }
 }
 
@@ -65,7 +65,7 @@ exports.getDocuments = async (req,res) =>{
         res.status(200).json({documents:documents});
     } catch (error) {
         console.log(error);
-        return res.status(500).json({error:'Internal Server error'});
+        return res.status(500).json({msg:'Internal Server error',error:error});
     }
     
 }
@@ -104,7 +104,7 @@ exports.deleteDocument = async (req,res) => {
 
     } catch (error) {
         console.log(error);
-        return res.status(500).json({msg:'Internal Server error'});
+        return res.status(500).json({msg:'Internal Server error',error:error});
     }
 
 }
@@ -120,6 +120,6 @@ exports.downloadFile = async (req,res) =>{
         res.status(200).json({document:docurl,msg:"Successful download"});
     }catch(error){
         console.log(error);
-        return res.status(500).json({error});
+        return res.status(500).json({error:error});
     }
 }
