@@ -1,7 +1,5 @@
 const User = require('../database/mainSchema');
-const path = require('path');
-const upload = require('../middleware/multertoCloudinary');
-const cloudinary = require('../middleware/cloudinary');
+const upload = require('../middleware/multer');
 
 const Alldocuments = async (id) => {
     const data = await User.findById(id);
@@ -25,6 +23,18 @@ exports.getDocuments = async (req, res) => {
 
 }
 
+exports.downloadFile = async (req, res) => {
+    const id = req.body.Id;
+    const user_id = req.id;
+    try {
+        const doc = await User.findOne({ _id: user_id }).select({ documents: { $elemMatch: { _id: id } } });
+        const {docurl,docName} = doc.documents[0].document
+        res.status(200).json({ document: {docurl,docName}, msg: "Successful download" });
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ error });
+    }
+}
 
 exports.addDocument = async (req, res) => {
     const user_id = req.id;
@@ -32,17 +42,18 @@ exports.addDocument = async (req, res) => {
         await upload(req, res);
 
         if (!req.file) {
-            return res.status(400).json({ msg: "Plz upload a file" });
+            return res.status(400).json({ msg: 'Please select a file' });
         }
 
-        const result = await cloudinary.uploader.upload(req.file.path, { folder: `WebDocumentkeeper/uploads/${user_id}/` });
+        const documentName = req.file;
 
+        const docurl = `${process.env.API}/public/${user_id}/${documentName.filename}`;
+        const mimetype = documentName.mimetype;
+        const docname = documentName.filename.substring(0, documentName.filename.lastIndexOf('_'));
         const document = {
-            docName : result.original_filename,
-            docurl : result.secure_url,
-            mimetype : req.file.mimetype,
-            cloudinary_public_id : result.public_id
-
+            docName: docname,
+            mimetype: mimetype,
+            docurl: docurl
         }
 
         await User.findByIdAndUpdate(user_id, {
@@ -62,20 +73,27 @@ exports.addDocument = async (req, res) => {
         if (error.code === "LIMIT_FILE_SIZE") {
             return res.status(400).json({ msg: "FileSize should be less than 2Mb" });
         }
-        return res.status(500).json({ error:error,msg: 'Internal Server error' });
+        return res.status(500).json({ msg: 'Internal Server error' });
     }
 }
+
 
 exports.deleteDocument = async (req, res) => {
     const user_id = req.id;
     const id = req.body.id;
+    // console.log(filename);
     try {
 
         const doc = await User.findOne({ _id: user_id }).select({ documents: { $elemMatch: { _id: id } } });
+        // console.log(doc);
+        const docurl = doc.documents[0].document.docurl;
+        const filename = docurl.slice(docurl.lastIndexOf('/'));
 
-        const public_id = doc.documents[0].document.cloudinary_public_id;
-
-        await cloudinary.uploader.destroy(public_id);
+        // console.log(del);
+        const filepath = './uploads/' + user_id + filename;
+        if (fs.existsSync(filepath)) {
+            await fs.unlinkSync(filepath);
+        }
 
         await User.findByIdAndUpdate(user_id, {
             $pull: {
@@ -92,21 +110,7 @@ exports.deleteDocument = async (req, res) => {
         console.log(error);
         return res.status(500).json({ msg: 'Internal Server error' });
     }
+
 }
 
 
-exports.downloadFile = async (req, res) => {
-    const id = req.body.Id;
-    const user_id = req.id;
-
-    try {
-        const doc = await User.findOne({ _id: user_id }).select({ documents: { $elemMatch: { _id: id } } });
-        const { docurl,docName } = doc.documents[0].document;
-
-        res.status(200).json({ document: {docurl,docName} , msg: "Successful download" });
-
-    } catch (error) {
-        console.log(error);
-        return res.status(500).json({ error });
-    }
-}

@@ -9,13 +9,13 @@ const storage = multer.diskStorage({
 
         let id = req.id;
         if(!fs.existsSync(`./uploads/${id}`)){
-            fs.mkdir(path.join(__dirname, `../uploads/${id}`),(err)=>{
+            fs.mkdir(path.join(__dirname, `./uploads/${id}`),(err)=>{
                 if(err) console.log(err);
-                else console.log("created");
+                else console.log("dictinory created");
             });
         }
 
-        cb(null, path.join(path.dirname(__dirname), `./uploads/${id}`));
+        cb(null, path.join((__dirname), `./uploads/${id}`));
     },
     filename: function (req, file, cb) {
         let fileName = req.body.fileName;

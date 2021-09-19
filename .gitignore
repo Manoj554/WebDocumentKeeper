@@ -1,1 +1,4 @@
 node_modules
+controller/document.js
+middleware/multertoCloudinary.js
+middleware/cloudinary.js
