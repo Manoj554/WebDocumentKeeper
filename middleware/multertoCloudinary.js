@@ -25,9 +25,8 @@ const storage = multer.diskStorage({
 const upload = multer({
     storage: storage,
     limits:  {
-        fileSize: 1024 * 1024 * 2
+        fileSize: 1024 * 1024 * 3
     }
-
 }).single('documentFile');
 
 const promify = util.promisify(upload);

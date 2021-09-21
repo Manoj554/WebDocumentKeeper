@@ -17,7 +17,7 @@ exports.Home = (req,res) =>{
             HomeTown:'Santoshi Nagar Umerkote Odisha, India'
         },
         Achivments:'Best paper Award (Online-Based Smart Energy Meter) in a Session in EPREC Conference 2021 ,Jamshedpur',
-        // Resume:"https://webdocumentkeeper.herokuapp.com/61462ea3949aa144461ed92f/"
+        Resume:"https://manojkumar.herokuapp.com/documents/ManojKumarMondal-B318029.pdf"
     })
 }
 

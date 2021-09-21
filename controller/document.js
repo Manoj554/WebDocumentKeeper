@@ -60,9 +60,9 @@ exports.addDocument = async (req, res) => {
         console.log(error);
 
         if (error.code === "LIMIT_FILE_SIZE") {
-            return res.status(400).json({ msg: "FileSize should be less than 2Mb" });
+            return res.status(400).json({ msg: "FileSize should be less than 3Mb" });
         }
-        return res.status(500).json({ error:error,msg: 'Internal Server error' });
+        return res.status(500).json({ error:error,msg: 'Only image and pdf files are allowed' });
     }
 }
 
