@@ -10,7 +10,6 @@ const Alldocuments = async (id) => {
         return documents;
     }
     return [];
-
 }
 
 exports.getDocuments = async (req, res) => {
