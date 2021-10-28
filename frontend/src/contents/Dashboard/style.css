@@ -1,0 +1,66 @@
+.dashboard_grid{
+    display: grid;
+    padding: 80px 70px;
+    justify-content: space-evenly;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-gap: 1rem 1rem;
+    background-color: rgb(201, 195, 195);
+}
+.homebg{
+    background: linear-gradient(orange,white,green);
+    min-height: 95vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgb(67, 27, 245);
+}
+.SigninStyle{
+    padding: 23px;
+    box-shadow: 0 0 5px silver;
+    border-radius: 7px ;
+}
+
+@media screen and (max-width: 1352px) {
+    .dashboard_grid{
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+@media screen and (max-width: 1046px) {
+    .dashboard_grid{
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        padding: 80px 10px;
+    }
+}
+@media screen and (max-width: 906px) {
+    .dashboard_grid{
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        padding: 80px 100px;
+    }
+}
+@media screen and (max-width: 760px) {
+    .dashboard_grid{
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+        padding: 80px 100px;
+    }
+    .SigninStyle{
+        box-shadow: 0 0 1px rgb(59, 58, 58);
+    }
+
+}
+@media screen and (max-width: 560px) {
+    .dashboard_grid{
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+        padding: 80px 30px;
+        grid-gap: 2rem 1rem;
+    }
+    .SigninStyle{
+        box-shadow: 0 0 0px rgb(59, 58, 58);
+    }
+}
+@media screen and (max-width: 350px) {
+    .dashboard_grid{
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+        padding: 80px 10px;
+        
+    }
+}
